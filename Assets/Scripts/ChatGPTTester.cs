@@ -1,4 +1,5 @@
 using RoslynCSharp;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class ChatGPTTester : MonoBehaviour
     private Button askButton;
 
     [SerializeField]
-    [TextArea(3, 10)]
+    [TextArea(5, 10)]
     private string prompt;
 
     private ScriptDomain domain = null;
@@ -21,14 +22,15 @@ public class ChatGPTTester : MonoBehaviour
     public void Execute()
     {
         askButton.interactable = false;
+        ChatGPTProgress.Instance.StartProgress();
         StartCoroutine(ChatGPTClient.Instance.Ask(prompt, (r) => ProcessResponse(r)));
     }
 
     void ProcessResponse(ChatGPTResponse response)
     {
         askButton.interactable = true;
+        ChatGPTProgress.Instance.StopProgress();
 
-        Logger.Instance.Clear();
         Logger.Instance.LogInfo(response.Data);
 
         // Compile and load the source code

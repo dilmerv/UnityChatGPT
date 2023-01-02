@@ -22,6 +22,7 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
         request.disposeUploadHandlerOnDispose = true;
+        request.disposeCertificateHandlerOnDispose = true;
         request.disposeDownloadHandlerOnDispose = true;
 
         request.SetRequestHeader("Content-Type", "application/json");
