@@ -6,6 +6,7 @@
 Assets/AssetStoreTools*
 [Ll]ogs/*
 [Ss]erverData/*
+[Cc]hatgpt_env*
 
 # IDE cache directories
 .vs/
