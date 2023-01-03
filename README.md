@@ -37,5 +37,8 @@ ChatGPT is not officially available which means there're unofficial solutions wh
     }
     ```
 3. Open the Unity project and scene located at Assets > Scenes > ChatGPTLogger.unity
-4. Go to Assets > Settings > ChatGPTSettings.asset and point the API Url to your ChatGPT flask service URL
+4. Go to Assets > Settings > ChatGPTSettings.asset and point the API Url to your ChatGPT flask service URL:
    <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTSettings.png" width="300">
+5. Ask ChatGPT a question as shown by clicking on "ChatGPTTester" game object:
+   <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTPrompt.png" width="300">
+6. Hit Play In Unity
