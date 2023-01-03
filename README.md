@@ -42,3 +42,6 @@ ChatGPT is not officially available which means there're unofficial solutions wh
 5. Ask ChatGPT a question as shown by clicking on "ChatGPTTester" game object:
    <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTPrompt.png" width="300">
 6. Hit Play In Unity
+
+## Sample Questions to Ask ChatGPT
+1. Write unity c# script monoBehavior named CubePlacer provides a method called Apply() which creates 5 primitive cubes 8 meter away from the camera along the z axis and each separated by 2 meters along the x axis and tilt it by 15 degrees on x

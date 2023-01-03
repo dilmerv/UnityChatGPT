@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 chatGPT = ChatGPT()
-filteredInfo = " - do not write any explanations"
+filteredInfo = " - do not include any explanations and always use ``` for markdown code"
 
 @app.route("/chatgpt/question", methods=["POST"])
 def question():
@@ -16,6 +16,11 @@ def question():
         print("ChatGPT Question is: {}".format(question))
 
     response = chatGPT.ask(question)
+
+    if args.get("debug", default=False, type=bool):
+        print("ChatGPT Response Processed...")
+        print(response)
+        
     return response
 
 @app.route("/chatgpt/status", methods=["GET"])

@@ -1315,10 +1315,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   askButton: {fileID: 744690797}
-  prompt: Write unity c# script monoBehavior named CubePlacer provides a method called
-    Apply() which creates 5 primitive cubes 8 meter away from the camera along the
-    z axis and each separated by 2 meters along the x axis and tilt it by 15 degrees
-    on x. Rotate each cube constantly along it z axis.
+  prompt: Implement a unity c# script monoBehavior named {CLASS_NAME} provides a
+    method called Apply which downloads a mesh banana from sketchfab with api key
+    is {API_KEY} then the model is loaded from the file and added to the scene about
+    10 meters away from the camera along the z axis.
+  replacements:
+  - replacementType: 0
+    value: BananaCreator
+  - replacementType: 1
+    value: Apply
+  - replacementType: 2
+    value: bb0128d1fcac4979afd63231f771596b
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
