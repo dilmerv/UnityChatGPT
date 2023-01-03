@@ -11,7 +11,8 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
 
     public IEnumerator Ask(string prompt, System.Action<ChatGPTResponse> callBack)
     {
-        var request = new UnityWebRequest(chatGPTSettings.apiURL, "POST");
+        var url = chatGPTSettings.debug ? $"{chatGPTSettings.apiURL}?debug=true" : chatGPTSettings.apiURL;
+        var request = new UnityWebRequest(url, "POST");
 
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(
             JsonConvert.SerializeObject(new ChatGPTRequest

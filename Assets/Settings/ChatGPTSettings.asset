@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   apiURL: http://localhost:5000/chatgpt/question
   apiKey: 
+  debug: 1

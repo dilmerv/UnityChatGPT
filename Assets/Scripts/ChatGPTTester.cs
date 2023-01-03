@@ -22,7 +22,7 @@ public class ChatGPTTester : MonoBehaviour
     public void Execute()
     {
         askButton.interactable = false;
-        ChatGPTProgress.Instance.StartProgress();
+        //ChatGPTProgress.Instance.StartProgress();
         StartCoroutine(ChatGPTClient.Instance.Ask(prompt, (r) => ProcessResponse(r)));
     }
 
