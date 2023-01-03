@@ -11,6 +11,8 @@ public struct ChatGPTReplacement
 public enum Replacements
 {
     CLASS_NAME,
-    ACTION,
-    API_KEY
+    BROADCAST_NAME,
+    ACTION_APPLY,
+    API_KEY,
+    SEARCH_ENTITY
 }

@@ -11,13 +11,14 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
     private TextMeshProUGUI progressText = null;
 
     [SerializeField]
-    private string progressInfo;
-
-    [SerializeField]
     private float frequency = 1.0f;
 
     [SerializeField]
-    private int maxLines = 15;
+    private int maxDots = 5;
+
+    private string status;
+
+    private int dotCount = 0;
 
     private Coroutine progress;
 
@@ -28,13 +29,15 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
         progressText.text = string.Empty;
     }
 
-    public void StartProgress()
+    public void StartProgress(string status = "In Progress")
     {
+        this.status = status;
         progress = StartCoroutine(ProcessProgress());
     }
     public void StopProgress()
     {
         done = true;
+        progressText.text = "Done";
     }
 
     IEnumerator ProcessProgress()
@@ -42,21 +45,27 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
         while (true)
         {
             yield return new WaitForSeconds(frequency);
-            
-            if (progressText.text.Split('\n').Count() >= maxLines)
+
+            if(dotCount >= maxDots)
             {
-                progressText.text = string.Empty;
-            }
-            else
-            {
-                progressText.text += $"<color=\"yellow\">{DateTime.Now.ToString("HH:mm:ss.fff")} {progressInfo}</color>\n";
+                dotCount = 0;
             }
 
+            progressText.text = $"<color=\"yellow\">{status}{Dots(dotCount)}</color>\n";
+
+            dotCount++;
             if (done)
             {
                 done = false;
                 StopCoroutine(progress);
             };
         }
+    }
+
+    private string Dots(int count)
+    {
+        string dots = string.Empty;
+        for (int i = 0; i < count; i++) dots += ".";
+        return dots;
     }
 }
