@@ -1,7 +1,5 @@
 ﻿using DilmerGames.Core.Singletons;
-using System;
 using System.Collections;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -37,7 +35,6 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
     public void StopProgress()
     {
         done = true;
-        progressText.text = "Done";
     }
 
     IEnumerator ProcessProgress()
@@ -57,6 +54,7 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
             if (done)
             {
                 done = false;
+                progressText.text = "Done";
                 StopCoroutine(progress);
             };
         }

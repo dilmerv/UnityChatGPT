@@ -1,8 +1,6 @@
 using GLTFast;
 using RoslynCSharp;
 using System;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,93 +14,67 @@ public class ChatGPTTester : MonoBehaviour
     [TextArea(8, 10)]
     private string prompt;
 
+    private string cachedPrompt;
+
     [SerializeField]
     private ChatGPTReplacement[] replacements;
 
     private ScriptDomain domain = null;
 
-    void Awake()
+    private void Awake()
     {
         domain = ScriptDomain.CreateDomain(nameof(ChatGPTTester));
+        cachedPrompt = prompt;
     }
-
-    public void ImportModel(string modelName)
-    {
-        ChatGPTProgress.Instance.StartProgress(@"Importing model {modelName} please wait");
-        StartCoroutine(SketchfabClient.Instance.SearchForModels(modelName, (r) => ProcessResponseModel(r)));
-    }
-
-    void ProcessResponseModel(SketchfabSearchResponse response)
-    {
-        var grabTopModel = response.Results.FirstOrDefault();
-        if (grabTopModel != null)
-        {
-            StartCoroutine(SketchfabClient.Instance.DownloadModel(grabTopModel.ModelId, (r) => ProcessDownloadModel(r)));
-        }
-    }
-
-    void ProcessDownloadModel(SketchfabDownloadResponse response)
-    {
-        StartCoroutine(SketchfabClient.Instance.DownloadZipFile(response.Gltf.Url, (r) => ProcessZipfile(r)));
-    }
-
-    async void ProcessZipfile(string zipfilePath)
-    {
-        try
-        {
-            var targetDirectory = Path.GetDirectoryName(zipfilePath);
-            ZipFile.ExtractToDirectory(zipfilePath, targetDirectory, true);
-
-            var gltf = new GltfImport();
-            // Create a settings object and configure it accordingly
-            var settings = new ImportSettings
-            {
-                GenerateMipMaps = true,
-                AnisotropicFilterLevel = 3,
-                NodeNameMethod = NameImportMethod.OriginalUnique
-            };
-
-            // Load the glTF and pass along the settings
-            var success = await gltf.Load($"{targetDirectory}\\scene.gltf", settings);
-
-            if (success)
-            {
-                var gameObject = new GameObject("glTF");
-                await gltf.InstantiateMainSceneAsync(gameObject.transform);
-            }
-            else
-            {
-                Debug.LogError("Loading glTF failed!");
-            }
-        }
-        catch(Exception e)
-        {
-            Logger.Instance.LogError(e.ToString());
-        }
-        ChatGPTProgress.Instance.StopProgress();
-    }
-   
 
     /// <summary>
     /// Execute is called from the AskButton labeled "ASK CHATGPT"
     /// </summary>
     public void Execute()
     {
+        // restore cached - userful for running multiple times
+        prompt = cachedPrompt;
+
         askButton.interactable = false;
 
         ChatGPTProgress.Instance.StartProgress("Generating code please wait");
-        
+
         // handle replacements
-        Array.ForEach(replacements, r => 
-        { 
-            prompt = prompt.Replace("{" + $"{r.replacementType}" + "}", r.value); 
+        Array.ForEach(replacements, r =>
+        {
+            prompt = prompt.Replace("{" + $"{r.replacementType}" + "}", r.value);
         });
 
         // call chatGPT service
         StartCoroutine(ChatGPTClient.Instance.Ask(prompt, (r) => ProcessResponse(r)));
     }
 
-    void ProcessResponse(ChatGPTResponse response)
+    public void ImportModel(string modelName)
+    {
+        ChatGPTProgress.Instance.StartProgress($"Importing model {modelName} please wait");
+        StartCoroutine(SketchfabClient.Instance.SearchForModels(modelName, (r) => ProcessResponseModel(r)));
+    }
+
+    private void ProcessResponseModel(SketchfabSearchResponse response)
+    {
+        var modelCount = response.Results.Count();
+        if (modelCount == 0 || response.Results == null) return;
+
+        var pickAModelAtIndex = UnityEngine.Random.Range(0, modelCount);
+        var model = response.Results.Skip(pickAModelAtIndex - 1).Take(1).FirstOrDefault();
+
+        if (model != null)
+        {
+            StartCoroutine(SketchfabClient.Instance.DownloadModel(model.ModelId, (r) => ProcessDownloadModel(r)));
+        }
+    }
+
+    private void ProcessDownloadModel(SketchfabDownloadResponse response)
+    {
+        StartCoroutine(SketchfabClient.Instance.DownloadZipFile(response.Gltf.Url, (r) => (new GltfImport()).ExtractAndImportGLTF(r)));
+    }
+
+    private void ProcessResponse(ChatGPTResponse response)
     {
         askButton.interactable = true;
         ChatGPTProgress.Instance.StopProgress();
@@ -122,7 +94,7 @@ public class ChatGPTTester : MonoBehaviour
             .FirstOrDefault(r => r.replacementType == Replacements.ACTION_APPLY).value);
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         if (domain != null)
         {
