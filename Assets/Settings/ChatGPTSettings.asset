@@ -15,3 +15,8 @@ MonoBehaviour:
   apiURL: http://localhost:5000/chatgpt/question
   apiKey: 
   debug: 1
+  reminders:
+  - do not include any explanations
+  - always use ``` for markdown code
+  - include Unity and System Collections namespaces
+  - be sure to use IEnumerator in any metholds including yield

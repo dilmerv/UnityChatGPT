@@ -14,11 +14,9 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
     [SerializeField]
     private int maxDots = 5;
 
-    private string status;
+    public string Status { get; set; }
 
     private int dotCount = 0;
-
-    private Coroutine progress;
 
     private bool done = false;
 
@@ -29,8 +27,8 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
 
     public void StartProgress(string status = "In Progress")
     {
-        this.status = status;
-        progress = StartCoroutine(ProcessProgress());
+        this.Status = status;
+        StartCoroutine(ProcessProgress());
     }
     public void StopProgress()
     {
@@ -43,19 +41,16 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
         {
             yield return new WaitForSeconds(frequency);
 
-            if(dotCount >= maxDots)
-            {
-                dotCount = 0;
-            }
+            if(dotCount >= maxDots) dotCount = 0;
 
-            progressText.text = $"<color=\"yellow\">{status}{Dots(dotCount)}</color>\n";
-
+            progressText.text = $"<color=\"yellow\">{Status}{Dots(dotCount)}</color>";
             dotCount++;
+
             if (done)
             {
                 done = false;
-                progressText.text = "Done";
-                StopCoroutine(progress);
+                progressText.text = "<color=\"green\">Done...</color>";
+                break;
             };
         }
     }

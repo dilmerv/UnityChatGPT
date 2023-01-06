@@ -163,7 +163,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 3
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -327,7 +327,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.043619405, y: 0, z: 0, w: 0.9990483}
-  m_LocalPosition: {x: 5, y: 2, z: -10}
+  m_LocalPosition: {x: 5, y: 2, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -568,6 +568,10 @@ PrefabInstance:
     - target: {fileID: 5410011819506224425, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410011819544524180, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
+      propertyPath: maxLines
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5410011819544524181, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
       propertyPath: m_Pivot.x
@@ -889,8 +893,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
+      propertyPath: prompt
+      value: Create A Unity C# script MonoBehavior named {CLASS_NAME} which includes
+        a method {ACTION_APPLY} which first calls into BroadcastMessage with first
+        argument as {BROADCAST_NAME} and {SEARCH_ENTITY} as second parameter. After
+        BroadcastMessage check every 1 second for glTF gameObject and if found constantly
+        move it fast along the z axis
+      objectReference: {fileID: 0}
+    - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
       propertyPath: askButton
       value: 
       objectReference: {fileID: 744690797}
+    - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
+      propertyPath: replacements.Array.data[3].value
+      value: Apply
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56b1749b5df117b489232d54e54ce101, type: 3}

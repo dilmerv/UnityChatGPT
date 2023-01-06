@@ -3,13 +3,12 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 chatGPT = ChatGPT()
-filteredInfo = " - do not include any explanations and always use ``` for markdown code"
 
 @app.route("/chatgpt/question", methods=["POST"])
 def question():
     args = request.args
     prompt = request.json
-    question = prompt["question"] + filteredInfo
+    question = prompt["question"]
 
     if args.get("debug", default=False, type=bool):
         print("ChatGPT Question Received...")

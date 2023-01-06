@@ -2,11 +2,12 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public static class GltfExtensions
 {
-    public static async void ExtractAndImportGLTF(this GltfImport gltfImport, string zipfilePath)
+    public static async Task ExtractAndImportGLTF(this GltfImport gltfImport, string zipfilePath)
     {
         try
         {
@@ -22,7 +23,7 @@ public static class GltfExtensions
             };
 
             // Load the glTF and pass along the settings
-            var success = await gltfImport.Load($"{targetDirectory}\\scene.gltf", settings);
+            var success = await gltfImport.Load($"{Path.Combine(targetDirectory,"scene.gltf")}", settings);
 
             if (success)
             {
@@ -40,6 +41,5 @@ public static class GltfExtensions
         {
             Logger.Instance.LogError(e.ToString());
         }
-        ChatGPTProgress.Instance.StopProgress();
     }
 }
