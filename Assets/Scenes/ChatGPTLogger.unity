@@ -905,6 +905,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 744690797}
     - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
+      propertyPath: chatGPTQuestion
+      value: 
+      objectReference: {fileID: 11400000, guid: baa09d6e424a4384c805366caaa6c6e9, type: 2}
+    - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
       propertyPath: replacements.Array.data[3].value
       value: Apply
       objectReference: {fileID: 0}

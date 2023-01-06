@@ -2,7 +2,6 @@ using GLTFast;
 using RoslynCSharp;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,13 +11,9 @@ public class ChatGPTTester : MonoBehaviour
     private Button askButton;
 
     [SerializeField]
-    [TextArea(8, 10)]
-    private string prompt;
+    private ChatGPTQuestion chatGPTQuestion;
 
     private string cachedPrompt;
-
-    [SerializeField]
-    private ChatGPTReplacement[] replacements;
 
     private ScriptDomain domain = null;
 
@@ -29,7 +24,7 @@ public class ChatGPTTester : MonoBehaviour
     private void Awake()
     {
         domain = ScriptDomain.CreateDomain(nameof(ChatGPTTester));
-        cachedPrompt = prompt;
+        cachedPrompt = chatGPTQuestion.prompt;
     }
 
     /// <summary>
@@ -38,20 +33,20 @@ public class ChatGPTTester : MonoBehaviour
     public void Execute()
     {
         // restore cached - userful for running multiple times
-        prompt = cachedPrompt;
+        chatGPTQuestion.prompt = cachedPrompt;
 
         askButton.interactable = false;
 
         ChatGPTProgress.Instance.StartProgress($"Generating code (attempt #{attemptsCount+1}) please wait");
 
         // handle replacements
-        Array.ForEach(replacements, r =>
+        Array.ForEach(chatGPTQuestion.replacements, r =>
         {
-            prompt = prompt.Replace("{" + $"{r.replacementType}" + "}", r.value);
+            chatGPTQuestion.prompt = chatGPTQuestion.prompt.Replace("{" + $"{r.replacementType}" + "}", r.value);
         });
 
         // call chatGPT service
-        StartCoroutine(ChatGPTClient.Instance.Ask(prompt, (r) => ProcessResponse(r)));
+        StartCoroutine(ChatGPTClient.Instance.Ask(chatGPTQuestion.prompt, (r) => ProcessResponse(r)));
     }
 
     public void ImportModel(string modelName)
@@ -92,13 +87,13 @@ public class ChatGPTTester : MonoBehaviour
             // Compile and load the source code
             ScriptAssembly assembly = domain.CompileAndLoadSource(response.Data, ScriptSecurityMode.UseSettings);
 
-            ScriptType behaviourType = assembly.FindSubTypeOf<MonoBehaviour>(replacements
+            ScriptType behaviourType = assembly.FindSubTypeOf<MonoBehaviour>(chatGPTQuestion.replacements
                 .FirstOrDefault(r => r.replacementType == Replacements.CLASS_NAME).value);
 
             ScriptProxy proxy = behaviourType.CreateInstance(gameObject);
 
             // add an optional check here
-            proxy.Call(replacements
+            proxy.Call(chatGPTQuestion.replacements
                 .FirstOrDefault(r => r.replacementType == Replacements.ACTION_APPLY).value);
         }
         catch (Exception e)
