@@ -2,12 +2,11 @@
 using System;
 using System.IO;
 using System.IO.Compression;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public static class GltfExtensions
 {
-    public static async Task ExtractAndImportGLTF(this GltfImport gltfImport, string zipfilePath)
+    public static async void ExtractAndImportGLTF(this GltfImport gltfImport, string zipfilePath)
     {
         try
         {

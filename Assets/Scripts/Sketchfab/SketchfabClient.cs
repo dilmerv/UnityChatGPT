@@ -21,16 +21,13 @@ public class SketchfabClient : Singleton<SketchfabClient>
         return APICall(sketchfabSettings.downloadAPIUrl, modelId, callback);
     }
 
-    public IEnumerator DownloadZipFile(string url, System.Action<string> callBack)
+    public IEnumerator DownloadZipFile(string url, Action<string> callBack)
     {
-        string downloadPath = $"{Application.persistentDataPath}/models";
-        PurgeModels(downloadPath);
+        string downloadZipPath = $"{Application.persistentDataPath}{sketchfabSettings.downloadModelsZipPath}";
+        PurgeModels(downloadZipPath);
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
-            string modelDownloadPath = $"{downloadPath}/model.zip";
-            if (File.Exists(modelDownloadPath)) File.Delete(modelDownloadPath);
-            request.downloadHandler = new DownloadHandlerFile(modelDownloadPath);
-
+            request.downloadHandler = new DownloadHandlerFile(downloadZipPath);
             UnityWebRequestAsyncOperation op = request.SendWebRequest();
 
             while (!op.isDone)
@@ -44,17 +41,23 @@ public class SketchfabClient : Singleton<SketchfabClient>
                 Debug.LogError(request.error);
                 yield break;
             }
-            callBack(downloadPath);
+            callBack(downloadZipPath);
         }
     }
 
     private void PurgeModels(string directory)
     {
-        if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
-        Array.ForEach(Directory.GetFiles(directory), f => File.Delete(f));
+        var targetDirectory = Path.GetDirectoryName(directory);
+        if (!Directory.Exists(targetDirectory))
+            Directory.CreateDirectory(targetDirectory);
+        else
+        {
+            Directory.Delete(targetDirectory, true);
+            Directory.CreateDirectory(targetDirectory);
+        }
     }
 
-    public IEnumerator APICall<T>(string url, string paramName, System.Action<T> callback)
+    public IEnumerator APICall<T>(string url, string paramName, Action<T> callback)
     {
         var urlWithParams = string.Format(url, paramName);
         using (UnityWebRequest request = BuildRequest(urlWithParams))

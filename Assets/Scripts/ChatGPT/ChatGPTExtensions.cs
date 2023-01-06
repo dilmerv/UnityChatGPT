@@ -12,5 +12,4 @@ public static class ChatGPTExtensions
         chatGPTResponse.Data = codelines.FirstOrDefault(c => c.Contains(KEYWORD_APPLY) || c.Contains(KEYWORD_USING) || c.Contains(KEYWORD_PUBLIC_CLASS));
         return chatGPTResponse;
     }
-
 }

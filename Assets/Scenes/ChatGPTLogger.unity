@@ -897,8 +897,8 @@ PrefabInstance:
       value: Create A Unity C# script MonoBehavior named {CLASS_NAME} which includes
         a method {ACTION_APPLY} which first calls into BroadcastMessage with first
         argument as {BROADCAST_NAME} and {SEARCH_ENTITY} as second parameter. After
-        BroadcastMessage check every 1 second for glTF gameObject and if found constantly
-        move it fast along the z axis
+        BroadcastMessage check every 1 second for a "glTF" gameObject and if found
+        constantly move it along the z axis at 0.5f meters per 1/30 of a second
       objectReference: {fileID: 0}
     - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
       propertyPath: askButton

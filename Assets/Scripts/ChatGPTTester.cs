@@ -77,9 +77,7 @@ public class ChatGPTTester : MonoBehaviour
     private void ProcessDownloadModel(SketchfabDownloadResponse response)
     {
         StartCoroutine(SketchfabClient.Instance.DownloadZipFile(response.Gltf.Url,
-            (r) => {
-                (new GltfImport()).ExtractAndImportGLTF(r).RunSynchronously();
-         }));
+            (r) => (new GltfImport()).ExtractAndImportGLTF(r)));
     }
 
 

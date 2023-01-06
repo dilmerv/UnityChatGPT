@@ -15,3 +15,4 @@ MonoBehaviour:
   searchAPIUrl: https://api.sketchfab.com/v3/search?type=models&downloadable=true&q={0}&sort_by=-likeCount&staffpicked=true&pbr_type=false
   downloadAPIUrl: https://api.sketchfab.com/v3/models/{0}/download
   apiToken: bb0128d1fcac4979afd63231f771596b
+  downloadModelsZipPath: /models/model.zip
