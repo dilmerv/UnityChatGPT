@@ -40,5 +40,7 @@ public static class GltfExtensions
         {
             Logger.Instance.LogError(e.ToString());
         }
+
+        ChatGPTProgress.Instance.StopProgress();
     }
 }

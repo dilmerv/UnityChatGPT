@@ -39,8 +39,6 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
     {
         while (true)
         {
-            yield return new WaitForSeconds(frequency);
-
             if(dotCount >= maxDots) dotCount = 0;
 
             progressText.text = $"<color=\"yellow\">{Status}{Dots(dotCount)}</color>";
@@ -52,6 +50,8 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
                 progressText.text = "<color=\"green\">Done...</color>";
                 break;
             };
+
+            yield return new WaitForSeconds(frequency);
         }
     }
 

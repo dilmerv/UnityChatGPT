@@ -569,10 +569,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5410011819544524180, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
-      propertyPath: maxLines
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 5410011819544524181, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -719,6 +715,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
+--- !u!114 &5410011819231247312 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2738196048261956538, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
+  m_PrefabInstance: {fileID: 5410011819231247311}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6303445552529435459
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -907,7 +914,11 @@ PrefabInstance:
     - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
       propertyPath: chatGPTQuestion
       value: 
-      objectReference: {fileID: 11400000, guid: baa09d6e424a4384c805366caaa6c6e9, type: 2}
+      objectReference: {fileID: 11400000, guid: f0dec8e107cd00743a61d9722f1a6cfb, type: 2}
+    - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
+      propertyPath: scenarioQuestion
+      value: 
+      objectReference: {fileID: 5410011819231247312}
     - target: {fileID: 8163590926882315465, guid: 56b1749b5df117b489232d54e54ce101, type: 3}
       propertyPath: replacements.Array.data[3].value
       value: Apply

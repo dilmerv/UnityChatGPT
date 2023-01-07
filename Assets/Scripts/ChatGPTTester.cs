@@ -2,6 +2,7 @@ using GLTFast;
 using RoslynCSharp;
 using System;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +12,13 @@ public class ChatGPTTester : MonoBehaviour
     private Button askButton;
 
     [SerializeField]
-    private ChatGPTQuestion chatGPTQuestion;
+    private TextMeshProUGUI scenarioQuestion;
 
-    private string cachedPrompt;
+    [HideInInspector]
+    private ChatGPTQuestion cachedChatGPTQuestion;
+
+    [SerializeField]
+    private ChatGPTQuestion chatGPTQuestion;
 
     private ScriptDomain domain = null;
 
@@ -24,7 +29,25 @@ public class ChatGPTTester : MonoBehaviour
     private void Awake()
     {
         domain = ScriptDomain.CreateDomain(nameof(ChatGPTTester));
-        cachedPrompt = chatGPTQuestion.prompt;
+        chatGPTQuestion.cachedPrompt = chatGPTQuestion.prompt;
+        scenarioQuestion.text = string.Empty;
+
+        //cached initial question
+        cachedChatGPTQuestion = chatGPTQuestion;
+    }
+
+    /// <summary>
+    /// Handles cases when question changes and we need to cache the original
+    /// question asked, this allow us to rerun the same question multiple times
+    /// </summary>
+    private void OnValidate()
+    {
+        if(cachedChatGPTQuestion != chatGPTQuestion)
+        {
+            Debug.Log($"Question is changed to scenario: {chatGPTQuestion.scenarioName}");
+            chatGPTQuestion.cachedPrompt = chatGPTQuestion.prompt;
+            cachedChatGPTQuestion = chatGPTQuestion;
+        }
     }
 
     /// <summary>
@@ -33,7 +56,10 @@ public class ChatGPTTester : MonoBehaviour
     public void Execute()
     {
         // restore cached - userful for running multiple times
-        chatGPTQuestion.prompt = cachedPrompt;
+        chatGPTQuestion.prompt = chatGPTQuestion.cachedPrompt;
+
+        // populate scenario question
+        scenarioQuestion.text = $"Scenario Question: {chatGPTQuestion.scenarioName}";
 
         askButton.interactable = false;
 
@@ -104,7 +130,7 @@ public class ChatGPTTester : MonoBehaviour
             if (attemptsCount < attemptsAllowed)
             {
                 attemptsCount++;
-                cachedPrompt += $", avoid this error: {e.Message}";
+                chatGPTQuestion.cachedPrompt += $", avoid this error: {e.Message}";
                 Execute();
             }
         }
