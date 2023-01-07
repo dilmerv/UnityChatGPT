@@ -12,13 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61337b43735fad4d96f79a725948da1, type: 3}
   m_Name: ChatGPTQuestion_2
   m_EditorClassIdentifier: 
-  scenarioName: Adding a cube and rotating it
-  prompt: Create A Unity C# script MonoBehavior named {CLASS_NAME} which includes
-    a method {ACTION_APPLY} which creates a primitive cube and rotates it continuously
-  cachedPrompt: Create A Unity C# script MonoBehavior named CubeCreator which includes
-    a method Apply which creates a primitive cube and rotates it continuously
+  scenarioTitle: Importing a church and rotating it
+  prompt: Create A Unity C# script MonoBehavior named ChurchCreator which includes
+    a method Apply which first calls into BroadcastMessage with first argument as
+    ImportModel and church as second parameter. After BroadcastMessage check every
+    1 second for a "glTF" gameObject and if found constantly rotate it fast but wait
+    0.1f per iteration
+  cachedPrompt: Create A Unity C# script MonoBehavior named ChurchCreator which includes
+    a method Apply which first calls into BroadcastMessage with first argument as
+    ImportModel and church as second parameter. After BroadcastMessage check every
+    1 second for a "glTF" gameObject and if found constantly rotate it fast but wait
+    0.1f per iteration
   replacements:
   - replacementType: 0
-    value: CubeCreator
+    value: ChurchCreator
+  - replacementType: 1
+    value: ImportModel
+  - replacementType: 4
+    value: minecraft church
   - replacementType: 2
     value: Apply

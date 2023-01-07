@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61337b43735fad4d96f79a725948da1, type: 3}
   m_Name: ChatGPTQuestion_1
   m_EditorClassIdentifier: 
-  scenarioName: Importing car and moving it
-  prompt: Create A Unity C# script MonoBehavior named {CLASS_NAME} which includes
-    a method {ACTION_APPLY} which first calls into BroadcastMessage with first argument
-    as {BROADCAST_NAME} and {SEARCH_ENTITY} as second parameter. After BroadcastMessage
-    check every 1 second for a "glTF" gameObject and if found constantly move it
-    along the z axis at 0.5f meters per 1/30 of a second
-  cachedPrompt: Create A Unity C# script MonoBehavior named {CLASS_NAME} which includes
-    a method {ACTION_APPLY} which first calls into BroadcastMessage with first argument
-    as {BROADCAST_NAME} and {SEARCH_ENTITY} as second parameter. After BroadcastMessage
-    check every 1 second for a "glTF" gameObject and if found constantly move it
-    along the z axis at 0.5f meters per 1/30 of a second
+  scenarioTitle: Importing car and moving it
+  prompt: Create A Unity C# script MonoBehavior named SketchfabCreator which includes
+    a method Apply which first calls into BroadcastMessage with first argument as
+    ImportModel and jaguar as second parameter. After BroadcastMessage check every
+    1 second for a "glTF" gameObject and if found constantly move it along the z
+    axis at 0.5f meters per 1/30 of a second
+  cachedPrompt: Create A Unity C# script MonoBehavior named SketchfabCreator which
+    includes a method Apply which first calls into BroadcastMessage with first argument
+    as ImportModel and jaguar as second parameter. After BroadcastMessage check every
+    1 second for a "glTF" gameObject and if found constantly move it along the z
+    axis at 0.5f meters per 1/30 of a second
   replacements:
   - replacementType: 0
-    value: SketchfabCreator
+    value: CarCreator
   - replacementType: 1
     value: ImportModel
   - replacementType: 4

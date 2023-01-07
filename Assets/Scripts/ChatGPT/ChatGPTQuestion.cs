@@ -3,7 +3,7 @@
 [CreateAssetMenu(fileName = "ChatGPTQuestion", menuName = "ChatGPT/ChatGPTQuestion", order = 2)]
 public class ChatGPTQuestion : ScriptableObject
 {
-    public string scenarioName;
+    public string scenarioTitle;
 
     [TextArea(8,20)]
     public string prompt;

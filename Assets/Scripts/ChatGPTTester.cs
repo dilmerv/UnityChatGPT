@@ -12,6 +12,9 @@ public class ChatGPTTester : MonoBehaviour
     private Button askButton;
 
     [SerializeField]
+    private TextMeshProUGUI scenarioTitle;
+
+    [SerializeField]
     private TextMeshProUGUI scenarioQuestion;
 
     [HideInInspector]
@@ -30,7 +33,7 @@ public class ChatGPTTester : MonoBehaviour
     {
         domain = ScriptDomain.CreateDomain(nameof(ChatGPTTester));
         chatGPTQuestion.cachedPrompt = chatGPTQuestion.prompt;
-        scenarioQuestion.text = string.Empty;
+        scenarioTitle.text = string.Empty;
 
         //cached initial question
         cachedChatGPTQuestion = chatGPTQuestion;
@@ -44,7 +47,7 @@ public class ChatGPTTester : MonoBehaviour
     {
         if(cachedChatGPTQuestion != chatGPTQuestion)
         {
-            Debug.Log($"Question is changed to scenario: {chatGPTQuestion.scenarioName}");
+            Debug.Log($"Question is changed to scenario: {chatGPTQuestion.scenarioTitle}");
             chatGPTQuestion.cachedPrompt = chatGPTQuestion.prompt;
             cachedChatGPTQuestion = chatGPTQuestion;
         }
@@ -59,7 +62,7 @@ public class ChatGPTTester : MonoBehaviour
         chatGPTQuestion.prompt = chatGPTQuestion.cachedPrompt;
 
         // populate scenario question
-        scenarioQuestion.text = $"Scenario Question: {chatGPTQuestion.scenarioName}";
+        scenarioTitle.text = $"Scenario Question: {chatGPTQuestion.scenarioTitle}";
 
         askButton.interactable = false;
 
@@ -70,6 +73,8 @@ public class ChatGPTTester : MonoBehaviour
         {
             chatGPTQuestion.prompt = chatGPTQuestion.prompt.Replace("{" + $"{r.replacementType}" + "}", r.value);
         });
+
+        scenarioQuestion.text = chatGPTQuestion.prompt;
 
         // call chatGPT service
         StartCoroutine(ChatGPTClient.Instance.Ask(chatGPTQuestion.prompt, (r) => ProcessResponse(r)));
