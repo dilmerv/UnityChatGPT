@@ -6,10 +6,13 @@ using UnityEngine;
 
 public static class GltfExtensions
 {
-    public static async void ExtractAndImportGLTF(this GltfImport gltfImport, string zipfilePath)
+    public static async void ExtractAndImportGLTF(this GltfImport gltfImport, 
+        string zipfilePath, string entity)
     {
         try
         {
+            if (string.IsNullOrEmpty(entity)) entity = "glTF";
+
             var targetDirectory = Path.GetDirectoryName(zipfilePath);
             ZipFile.ExtractToDirectory(zipfilePath, targetDirectory, true);
 
@@ -26,9 +29,9 @@ public static class GltfExtensions
 
             if (success)
             {
-                var existingGameObject = GameObject.Find("glTF");
+                var existingGameObject = GameObject.Find(entity);
                 if (existingGameObject != null) GameObject.DestroyImmediate(existingGameObject);
-                var gameObject = new GameObject("glTF");
+                var gameObject = new GameObject(entity);
                 await gltfImport.InstantiateMainSceneAsync(gameObject.transform);
             }
             else

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d61337b43735fad4d96f79a725948da1, type: 3}
-  m_Name: ChatGPTQuestion_3
+  m_Name: ChatGPTQuestion_4
   m_EditorClassIdentifier: 
   scenarioTitle: Creating a cube and rotating it
   prompt: Create A Unity C# script MonoBehaviour named {CLASS_NAME} which includes
-    a method {ACTION_APPLY} which creates a primitive cube and rotates it continuously
+    a method {ACTION_APPLY} which creates a primitive sphere and rotates it continuously
   replacements:
   - replacementType: 0
     value: CubeCreator

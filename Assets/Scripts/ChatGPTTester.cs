@@ -12,6 +12,9 @@ public class ChatGPTTester : MonoBehaviour
     private Button askButton;
 
     [SerializeField]
+    private Button importModelButton;
+
+    [SerializeField]
     private TextMeshProUGUI scenarioTitle;
 
     [SerializeField]
@@ -23,6 +26,8 @@ public class ChatGPTTester : MonoBehaviour
     [SerializeField]
     private ChatGPTQuestion chatGPTQuestion;
 
+    private string gptPrompt;
+
     private ScriptDomain domain = null;
 
     private int attemptsAllowed = 3;
@@ -32,7 +37,6 @@ public class ChatGPTTester : MonoBehaviour
     private void Awake()
     {
         domain = ScriptDomain.CreateDomain(nameof(ChatGPTTester));
-        chatGPTQuestion.cachedPrompt = chatGPTQuestion.prompt;
         scenarioTitle.text = string.Empty;
 
         //cached initial question
@@ -48,7 +52,6 @@ public class ChatGPTTester : MonoBehaviour
         if(cachedChatGPTQuestion != chatGPTQuestion)
         {
             Debug.Log($"Question is changed to scenario: {chatGPTQuestion.scenarioTitle}");
-            chatGPTQuestion.cachedPrompt = chatGPTQuestion.prompt;
             cachedChatGPTQuestion = chatGPTQuestion;
         }
     }
@@ -58,26 +61,25 @@ public class ChatGPTTester : MonoBehaviour
     /// </summary>
     public void Execute()
     {
-        // restore cached - userful for running multiple times
-        chatGPTQuestion.prompt = chatGPTQuestion.cachedPrompt;
+        gptPrompt = chatGPTQuestion.prompt;
 
         // populate scenario question
         scenarioTitle.text = $"Scenario Question: {chatGPTQuestion.scenarioTitle}";
 
-        askButton.interactable = false;
+        askButton.interactable = importModelButton.interactable = false;
 
         ChatGPTProgress.Instance.StartProgress($"Generating code (attempt #{attemptsCount+1}) please wait");
 
         // handle replacements
         Array.ForEach(chatGPTQuestion.replacements, r =>
         {
-            chatGPTQuestion.prompt = chatGPTQuestion.prompt.Replace("{" + $"{r.replacementType}" + "}", r.value);
+            gptPrompt = gptPrompt.Replace("{" + $"{r.replacementType}" + "}", r.value);
         });
 
-        scenarioQuestion.text = chatGPTQuestion.prompt;
+        scenarioQuestion.text = gptPrompt;
 
         // call chatGPT service
-        StartCoroutine(ChatGPTClient.Instance.Ask(chatGPTQuestion.prompt, (r) => ProcessResponse(r)));
+        StartCoroutine(ChatGPTClient.Instance.Ask(gptPrompt, (r) => ProcessResponse(r)));
     }
 
     public void ImportModel(string modelName)
@@ -103,13 +105,12 @@ public class ChatGPTTester : MonoBehaviour
     private void ProcessDownloadModel(SketchfabDownloadResponse response)
     {
         StartCoroutine(SketchfabClient.Instance.DownloadZipFile(response.Gltf.Url,
-            (r) => (new GltfImport()).ExtractAndImportGLTF(r)));
+            (r) => (new GltfImport()).ExtractAndImportGLTF(r, chatGPTQuestion.SearchEntityValue)));
     }
-
 
     private void ProcessResponse(ChatGPTResponse response)
     {   
-        askButton.interactable = true;
+        askButton.interactable = importModelButton.interactable = true;
         ChatGPTProgress.Instance.StopProgress();
         Logger.Instance.LogInfo(response.Data);
 
@@ -135,7 +136,8 @@ public class ChatGPTTester : MonoBehaviour
             if (attemptsCount < attemptsAllowed)
             {
                 attemptsCount++;
-                chatGPTQuestion.cachedPrompt += $", avoid this error: {e.Message}";
+                //TODO implement a good way of avoiding future errors
+                //chatGPTQuestion.prompt += $", avoid this error: {e.Message}";
                 Execute();
             }
         }
