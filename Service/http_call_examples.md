@@ -1,3 +1,7 @@
+## HTTP examples to use with our Python Flask Service
+
+[Download VS Code Rest Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) to easily execute these commands 
+```
 POST http://127.0.0.1:5000/chatgpt/question HTTP/1.1
 content-type: application/json
 
@@ -13,3 +17,5 @@ content-type: application/json
 }
 
 GET http://127.0.0.1:5000/chatgpt/status HTTP/1.1
+
+```
