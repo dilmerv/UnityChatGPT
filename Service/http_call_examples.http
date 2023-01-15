@@ -1,0 +1,15 @@
+POST http://127.0.0.1:5000/chatgpt/question HTTP/1.1
+content-type: application/json
+
+{
+    "question" : "create a C# script which displays hello world"
+}
+
+POST http://127.0.0.1:5000/chatgpt/question HTTP/1.1
+content-type: application/json
+
+{
+    "question" : "create a C# script which creates a cube and do not include explanations"
+}
+
+GET http://127.0.0.1:5000/chatgpt/status HTTP/1.1
