@@ -123,6 +123,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &277929877 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5410011819694780322, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
+  m_PrefabInstance: {fileID: 5410011819231247311}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +258,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &931695385
 MonoBehaviour:
@@ -261,6 +272,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ad970d5520c743be4148069965215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  askButton: {fileID: 277929877}
+  chatGPTAnswer: {fileID: 1909368163}
+  prompt: create a unity C# script which displays hello world with the debug log
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,7 +425,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1541708368
 GameObject:
@@ -540,6 +554,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1909368163 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5410011820403958062, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
+  m_PrefabInstance: {fileID: 5410011819231247311}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2013898026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2013898028}
+  - component: {fileID: 2013898027}
+  m_Layer: 0
+  m_Name: ChatGPTClient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2013898027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013898026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ef921714ad9f60439d79681f49d86d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatGTPSettings: {fileID: 11400000, guid: a46aa19d1126eb3499ab7b8043e71094, type: 2}
+--- !u!4 &2013898028
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013898026}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5410011819231247311
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -565,7 +635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5410011819544524181, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5410011819544524181, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
       propertyPath: m_AnchorMax.x
@@ -677,12 +747,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5410011819694780322, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5410011819694780322, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 931695385}
+    - target: {fileID: 5410011819694780322, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Execute
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410011819694780322, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ChatGPTTester, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410011819694780322, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5410011820175089175, guid: 3ceee71a8d4082842889d3b3497ea5ed, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 0
