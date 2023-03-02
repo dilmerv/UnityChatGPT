@@ -39,7 +39,7 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
             else
             {
                 string responseInfo = request.downloadHandler.text;
-                var response = new ChatGPTResponse { Data = responseInfo };
+                var response = (new ChatGPTResponse { Data = responseInfo }).CodeCleanUp();
                 callBack(response);
             }
         }

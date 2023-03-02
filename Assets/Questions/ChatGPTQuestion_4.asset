@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8f40005f71da0842b543834cc80d108, type: 3}
+  m_Name: ChatGPTQuestion_4
+  m_EditorClassIdentifier: 
+  scenarioTitle: Creating Line Renders
+  prompt: Create A Unity C# script named {CLASS_NAME} which generates 20 using primitiveType
+    spheres during start, place them randomly within a circle of 2 meters in diameter,
+    creates its own material with random colors for each sphere, randomly sized each
+    sphere, and adds a method to the {CLASS_NAME} script which is called from the
+    Update to consistently rotate each sphere along the circle at a very fast speed
+  codeAppended: GameObject.Find("ChatGPTTester").AddComponent<{CLASS_NAME}>()
+  replacements:
+  - replacementType: 0
+    value: PrimitiveSpheresCreator
+  reminders:
+  - do not include any explanations

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6303445552863025827}
-  - component: {fileID: 6303445552863025826}
+  - component: {fileID: 7285857790194270179}
   m_Layer: 0
   m_Name: ChatGPTProgress
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6303445552863025826
+--- !u!114 &7285857790194270179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,9 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6303445552863025820}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d2c63fb626ea4a4c93535e0b2bf0390, type: 3}
+  m_Script: {fileID: 11500000, guid: 24659d62fd9ad79449efdcbaabbc9633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   progressText: {fileID: 0}
-  frequency: 0.5
+  frequency: 1
   maxDots: 5
