@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ChatGPTSettings
   m_EditorClassIdentifier: 
   apiURL: https://api.openai.com/v1/chat/completions
-  apiKey: 
-  apiOrganization: 
+  apiKey: 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
+  apiOrganization: org-qgNncaFcro7JhpG4YuHPAtWA
   apiModel: gpt-3.5-turbo
   debug: 1
   reminders: []

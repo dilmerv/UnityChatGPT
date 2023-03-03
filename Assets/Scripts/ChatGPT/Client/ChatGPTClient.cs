@@ -1,5 +1,6 @@
 using DilmerGames.Core.Singletons;
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -28,7 +29,6 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
                        }                       
                    }
                 }));
-
             
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
@@ -42,6 +42,8 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
             request.SetRequestHeader("Authorization", $"Bearer {chatGTPSettings.apiKey}");
             request.SetRequestHeader("OpenAI-Organization", chatGTPSettings.apiOrganization);
 
+            var requestStartDateTime = DateTime.Now;
+
             yield return request.SendWebRequest();
 
             if(request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.DataProcessingError)
@@ -53,6 +55,8 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
                 string responseInfo = request.downloadHandler.text;
                 var response = JsonConvert.DeserializeObject<ChatGPTResponse>(responseInfo)
                     .CodeCleanUp();
+
+                response.ResponseTotalTime = (DateTime.Now - requestStartDateTime).TotalMilliseconds;
 
                 callBack(response);
             }

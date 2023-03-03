@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 [Serializable]
@@ -10,6 +9,7 @@ public class ChatGPTResponse
     public long Created { get; set; }
     public List<ChatChoice> Choices { get; set; }
     public ChatUsage Usage { get; set; }
+    public double ResponseTotalTime { get; set; }
 }
 
 [Serializable]

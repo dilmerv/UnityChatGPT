@@ -13,6 +13,9 @@ public class ChatGPTTester : MonoBehaviour
     private Button compilerButton;
 
     [SerializeField]
+    private TextMeshProUGUI responseTimeText;
+
+    [SerializeField]
     private TextMeshProUGUI chatGPTAnswer;
 
     [SerializeField]
@@ -54,6 +57,8 @@ public class ChatGPTTester : MonoBehaviour
 
     private void Awake()
     {
+        responseTimeText.text = string.Empty;
+
         askButton.onClick.AddListener(() =>
         {
             compilerButton.interactable = false;
@@ -96,6 +101,7 @@ public class ChatGPTTester : MonoBehaviour
 
             compilerButton.interactable = true;
             lastChatGPTResponseCache = response;
+            responseTimeText.text = $"Time: {response.ResponseTotalTime} ms";
 
             ChatGPTProgress.Instance.StopProgress();
 
