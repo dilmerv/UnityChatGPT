@@ -7,7 +7,7 @@ Few examples with ChatGPT API In Unity and this is highly experimental.
 
 ## ChatGPT Flask Service 
 
-**Deprecated - the latest changes use ChatGPT API instead of a python wrapper, however you could still use this but the python service may need some refactoring as the incoming object changed**
+⚠️Deprecated - the latest changes use ChatGPT API instead of a python wrapper, however you could still use this but the python service may need some refactoring as the incoming object changed**
 
 ChatGPT is not officially available which means there're unofficial solutions which allow you to use code which gets ChatGPT answers from [OpenAI](https://beta.openai.com/playground) by using browser automation tools. To do this do the following:
 1. Open a terminal and cd into this repo UnityChatGPT > Service folder
@@ -41,8 +41,10 @@ ChatGPT is not officially available which means there're unofficial solutions wh
     ```
 3. Open the Unity project and scene located at Assets > Scenes > ChatGPTLogger.unity
 4. Go to Assets > Settings > ChatGPTSettings.asset and point the API Url to your ChatGPT flask service URL:
+
    <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTSettings.png" width="300">
 5. Ask ChatGPT a question as shown by clicking on "ChatGPTTester" game object:
+
    <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTPrompt.png" width="300">
 6. Hit Play In Unity
 
