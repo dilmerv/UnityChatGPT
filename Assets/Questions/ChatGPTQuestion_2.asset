@@ -15,7 +15,8 @@ MonoBehaviour:
   scenarioTitle: Creating primite type cubes and rotate them
   promptPrefixConstant: A unity c# class script that
   prompt: Finds a PlayerArmature game object and get StarterAssetsInputs component
-    and sets the "move" field to a vector2 with 0.3f for x and 0 for y
+    and sets the "move" field to a vector2 with 0.3f for x and 0 for y, set "move"
+    field to 0 after 3 seconds, then set "jump" field to true for 3 seconds
   replacements: []
   reminders:
   - do not include any explanations
