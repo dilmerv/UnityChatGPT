@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
+using StarterAssets;
 using System;
 using System.Collections;
 using System.Linq;
@@ -49,12 +50,12 @@ public class RoslynCodeRunner : Singleton<RoslynCodeRunner>
             var addedCodeForGOExecution = $"GameObject.Find(\"{codeExecutionGameObjectName}\").AddComponent<{classInfo.Identifier.Value}>();";
 
             ScriptState<object> result = CSharpScript.RunAsync($"{code} {addedCodeForGOExecution}", SetDefaultImports()).Result;
-         
+            
             foreach (string var in resultVars)
             {
                 resultInfo += $"{result.GetVariable(var).Name}: {result.GetVariable(var).Value}\n";
             }
-            
+
             OnRunCodeCompleted?.Invoke();
         }
         catch(Exception mainCodeException)
@@ -68,11 +69,13 @@ public class RoslynCodeRunner : Singleton<RoslynCodeRunner>
         return ScriptOptions.Default
             .WithImports(namespaces.Select(n => n.Replace("using", string.Empty)
             .Trim()))
+            // TODO - make these configurable instead of having to add each reference manually
             .AddReferences(
                 typeof(MonoBehaviour).Assembly,
                 typeof(Debug).Assembly,
                 typeof(TextMeshPro).Assembly,
-                typeof(IEnumerator).Assembly
+                typeof(IEnumerator).Assembly,
+                typeof(StarterAssetsInputs).Assembly
             );
     }
 }

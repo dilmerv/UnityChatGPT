@@ -8,8 +8,6 @@ public class ChatGPTRequest
 
     [JsonProperty(PropertyName = "messages")]
     public ChatGPTMessage[] Messages { get; set; }
-
-
 }
 
 [Serializable]

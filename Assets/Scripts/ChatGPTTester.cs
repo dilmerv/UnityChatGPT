@@ -58,6 +58,7 @@ public class ChatGPTTester : MonoBehaviour
     private void Awake()
     {
         responseTimeText.text = string.Empty;
+        compilerButton.interactable = false;
 
         askButton.onClick.AddListener(() =>
         {
