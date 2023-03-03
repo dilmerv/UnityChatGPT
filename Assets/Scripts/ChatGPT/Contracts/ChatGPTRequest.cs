@@ -9,11 +9,3 @@ public class ChatGPTRequest
     [JsonProperty(PropertyName = "messages")]
     public ChatGPTMessage[] Messages { get; set; }
 }
-
-[Serializable]
-public class ChatGPTMessage
-{
-    public string role;
-
-    public string content;
-}
