@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8f40005f71da0842b543834cc80d108, type: 3}
-  m_Name: ChatGPTQuestion_2
+  m_Name: ChatGPTQuestion
   m_EditorClassIdentifier: 
-  scenarioTitle: Creating Line Renders
-  prompt: Create a Unity C# script named {CLASS_NAME} which creates a 3 line renders
-    with a new game object for each, 1st one is a triangle, second one is a square,
-    and last one is a circle
-  codeAppended: GameObject.Find("ChatGPTTester").AddComponent<{CLASS_NAME}>()
-  replacements:
-  - replacementType: 0
-    value: LineRenderCreator
+  scenarioTitle: Creating primite type cubes and rotate them
+  promptPrefixConstant: A unity c# script which creates
+  prompt: 20 primitiveType cubes and consistently rotate them along the y axis at
+    very fast speed
+  replacements: []
   reminders:
   - do not include any explanations
+  - aways include code with markdown
+  - do not require any prefabs
+  - do not require any references
+  - all references should not be null

@@ -47,7 +47,7 @@ public class ChatGPTProgress : Singleton<ChatGPTProgress>
             if (done)
             {
                 done = false;
-                progressText.text = "<color=\"green\">Done...</color>";
+                progressText.text = "<color=\"green\">Done generating source code...</color>";
                 break;
             };
 

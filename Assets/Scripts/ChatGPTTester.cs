@@ -10,6 +10,9 @@ public class ChatGPTTester : MonoBehaviour
     private Button askButton;
 
     [SerializeField]
+    private Button compilerButton;
+
+    [SerializeField]
     private TextMeshProUGUI chatGPTAnswer;
 
     [SerializeField]
@@ -20,17 +23,49 @@ public class ChatGPTTester : MonoBehaviour
 
     private string gptPrompt;
 
-    private string gptAppendedCode;
-
     [SerializeField]
     private TextMeshProUGUI scenarioTitleText;
 
     [SerializeField]
     private TextMeshProUGUI scenarioQuestionText;
 
+    [SerializeField]
+    private bool immediateCompilation = false;
+
+    [SerializeField]
+    private ChatGPTResponse lastChatGPTResponseCache;
+
+
+    public string ChatGPTMessage
+    {
+        get
+        {
+            return (lastChatGPTResponseCache.Choices.FirstOrDefault()?.Message?.Content ?? null) ?? string.Empty;
+        }
+    }
+
+    public Color CompileButtonColor
+    {
+        set
+        {
+            compilerButton.GetComponent<Image>().color = value;
+        }
+    }
+
+    private void Awake()
+    {
+        askButton.onClick.AddListener(() =>
+        {
+            compilerButton.interactable = false;
+            CompileButtonColor = Color.white;
+
+            Execute();
+        });
+    }
+
     public void Execute()
     {
-        gptPrompt = chatGPTQuestion.prompt;
+        gptPrompt = $"{chatGPTQuestion.promptPrefixConstant} {chatGPTQuestion.prompt}";
 
         scenarioTitleText.text = chatGPTQuestion.scenarioTitle;
 
@@ -52,20 +87,27 @@ public class ChatGPTTester : MonoBehaviour
 
         scenarioQuestionText.text = gptPrompt;
 
-        StartCoroutine(ChatGPTClient.Instance.Ask(gptPrompt, (r) => ProcessResponse(r)));
+
+        StartCoroutine(ChatGPTClient.Instance.Ask(gptPrompt, (response) =>
+        {
+            askButton.interactable = true;
+
+            CompileButtonColor = Color.green;
+
+            compilerButton.interactable = true;
+            lastChatGPTResponseCache = response;
+
+            ChatGPTProgress.Instance.StopProgress();
+
+            Logger.Instance.LogInfo(ChatGPTMessage);
+
+            if (immediateCompilation)
+                ProcessAndCompileResponse();
+        }));
     }
 
-    public void ProcessResponse(ChatGPTResponse response)
+    public void ProcessAndCompileResponse()
     {
-        Logger.Instance.LogInfo(response.Data);
-
-        string classValue = chatGPTQuestion.replacements
-            .FirstOrDefault(r => r.replacementType == Replacements.CLASS_NAME)
-            .value ?? string.Empty;
-
-        gptAppendedCode = chatGPTQuestion.codeAppended.Replace("{CLASS_NAME}", classValue);
-
-        RoslynCodeRunner.Instance.AdditionalCode = gptAppendedCode;
-        RoslynCodeRunner.Instance.RunCode(response.Data);
+        RoslynCodeRunner.Instance.RunCode(ChatGPTMessage);
     }
 }

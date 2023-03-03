@@ -1,8 +1,13 @@
 using DilmerGames.Core.Singletons;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
+using System.Collections;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -12,10 +17,11 @@ public class RoslynCodeRunner : Singleton<RoslynCodeRunner>
     private string[] namespaces;
 
     [SerializeField]
-    [TextArea(5, 12)]
-    private string code;
+    public string codeExecutionGameObjectName;
 
-    public string AdditionalCode { get; set; }
+    [SerializeField]
+    [TextArea(15, 35)]
+    private string code;
 
     [SerializeField]
     private UnityEvent OnRunCodeCompleted;
@@ -33,19 +39,27 @@ public class RoslynCodeRunner : Singleton<RoslynCodeRunner>
         updatedCode = string.IsNullOrEmpty(updatedCode) ? null : updatedCode;
         try
         {
-            code = $"{(updatedCode ?? code)} {AdditionalCode}";
-            ScriptState<object> result = CSharpScript.RunAsync(code, SetDefaultImports()).Result;
+            code = $"{(updatedCode ?? code)}";
 
-            foreach(string var in resultVars)
+            SyntaxTree tree = CSharpSyntaxTree.ParseText(code);
+            var root = (CompilationUnitSyntax)tree.GetRoot();
+            var firstMember = root.Members[0];
+            var classInfo = (ClassDeclarationSyntax)firstMember;
+
+            var addedCodeForGOExecution = $"GameObject.Find(\"{codeExecutionGameObjectName}\").AddComponent<{classInfo.Identifier.Value}>();";
+
+            ScriptState<object> result = CSharpScript.RunAsync($"{code} {addedCodeForGOExecution}", SetDefaultImports()).Result;
+         
+            foreach (string var in resultVars)
             {
                 resultInfo += $"{result.GetVariable(var).Name}: {result.GetVariable(var).Value}\n";
             }
-
+            
             OnRunCodeCompleted?.Invoke();
         }
-        catch(Exception e)
+        catch(Exception mainCodeException)
         {
-            Logger.Instance.LogError(e.Message);
+            Logger.Instance.LogError(mainCodeException.Message);
         }
     }
 
@@ -56,7 +70,9 @@ public class RoslynCodeRunner : Singleton<RoslynCodeRunner>
             .Trim()))
             .AddReferences(
                 typeof(MonoBehaviour).Assembly,
-                typeof(Debug).Assembly
+                typeof(Debug).Assembly,
+                typeof(TextMeshPro).Assembly,
+                typeof(IEnumerator).Assembly
             );
     }
 }

@@ -18,10 +18,18 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(
                 JsonConvert.SerializeObject(new ChatGPTRequest
                 {
-                    Question = prompt
-                    //TODO add reminders to the question
+                   Model = chatGTPSettings.apiModel,
+                   Messages = new ChatGPTMessage[]
+                   {
+                       new ChatGPTMessage
+                       {
+                            role = "user",
+                            content = prompt
+                       }                       
+                   }
                 }));
 
+            
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
             request.disposeDownloadHandlerOnDispose = true;
@@ -29,6 +37,10 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
             request.disposeCertificateHandlerOnDispose = true;
 
             request.SetRequestHeader("Content-Type", "application/json");
+
+            // required to authenticate against OpenAI
+            request.SetRequestHeader("Authorization", $"Bearer {chatGTPSettings.apiKey}");
+            request.SetRequestHeader("OpenAI-Organization", chatGTPSettings.apiOrganization);
 
             yield return request.SendWebRequest();
 
@@ -39,7 +51,9 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
             else
             {
                 string responseInfo = request.downloadHandler.text;
-                var response = (new ChatGPTResponse { Data = responseInfo }).CodeCleanUp();
+                var response = JsonConvert.DeserializeObject<ChatGPTResponse>(responseInfo)
+                    .CodeCleanUp();
+
                 callBack(response);
             }
         }

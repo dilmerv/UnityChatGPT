@@ -6,11 +6,10 @@ public class ChatGPTQuestion : ScriptableObject
 {
     public string scenarioTitle;
 
+    public string promptPrefixConstant;
+
     [TextArea(8, 20)]
     public string prompt;
-
-    [TextArea(5, 20)]
-    public string codeAppended;
 
     public ChatGPTReplacement[] replacements;
 
@@ -27,7 +26,7 @@ public struct ChatGPTReplacement
 
 [Serializable]
 public enum Replacements
-{ 
+{
     CLASS_NAME,
     ACTION,
     API_KEY
