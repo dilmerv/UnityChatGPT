@@ -3,9 +3,12 @@ Few examples with ChatGPT In Unity and this is highly experimental, the ChatGPT 
 
 ## Unity Requirements:
 1. Unity 2021.3.8f or greater
-2. [Roslyn C# - Runtime Compiler](https://assetstore.unity.com/packages/tools/integration/roslyn-c-runtime-compiler-142753?aid=1101l7LXo) (This is an Affiliate Link)
+2. [Roslyn C# - Runtime DLLs](https://github.com/dilmerv/UnityRoslynDemos) which you can get from the Resources folder. I'm also planning to add the Class Library project to GitHub which should allow you to generate these DLLs yourself.
 
-## ChatGPT Flask Service:
+## ChatGPT Flask Service 
+
+**Deprecated - the latest changes use ChatGPT API instead of a python wrapper, however you could still use this but the python service may need some refactoring as the incoming object changed**
+
 ChatGPT is not officially available which means there're unofficial solutions which allow you to use code which gets ChatGPT answers from [OpenAI](https://beta.openai.com/playground) by using browser automation tools. To do this do the following:
 1. Open a terminal and cd into this repo UnityChatGPT > Service folder
 2. Be sure you've Python 3.7 or greater installed if not (download it before proceeding)
