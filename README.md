@@ -1,5 +1,5 @@
 # Unity ChatGPT
-Few examples with ChatGPT In Unity and this is highly experimental, the ChatGPT API used here is not (official).
+Few examples with ChatGPT API In Unity and this is highly experimental.
 
 ## Unity Requirements:
 1. Unity 2021.3.8f or greater
