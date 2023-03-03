@@ -17,7 +17,7 @@ def question():
     response = chatGPT.ask(question)
 
     if args.get("debug", default=False, type=bool):
-        print("ChatGPT Response Processed...")
+        print("ChatGPT Response Received...")
         print(response)
         
     return response
@@ -25,6 +25,6 @@ def question():
 @app.route("/chatgpt/status", methods=["GET"])
 def status():
     return jsonify(status="ok")
-    
+
 if __name__ == "__main__":
     app.run(threaded=False)

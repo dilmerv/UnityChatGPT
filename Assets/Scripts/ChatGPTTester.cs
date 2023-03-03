@@ -1,5 +1,3 @@
-using GLTFast;
-using RoslynCSharp;
 using System;
 using System.Linq;
 using TMPro;
@@ -12,63 +10,68 @@ public class ChatGPTTester : MonoBehaviour
     private Button askButton;
 
     [SerializeField]
-    private Button importModelButton;
+    private Button compilerButton;
 
     [SerializeField]
-    private TextMeshProUGUI scenarioTitle;
+    private TextMeshProUGUI chatGPTAnswer;
 
     [SerializeField]
-    private TextMeshProUGUI scenarioQuestion;
-
-    [HideInInspector]
-    private ChatGPTQuestion cachedChatGPTQuestion;
+    private TextMeshProUGUI chatGPTQuestionText;
 
     [SerializeField]
     private ChatGPTQuestion chatGPTQuestion;
 
     private string gptPrompt;
 
-    private ScriptDomain domain = null;
+    [SerializeField]
+    private TextMeshProUGUI scenarioTitleText;
 
-    private int attemptsAllowed = 3;
+    [SerializeField]
+    private TextMeshProUGUI scenarioQuestionText;
 
-    private int attemptsCount = 0;
+    [SerializeField]
+    private bool immediateCompilation = false;
 
-    private void Awake()
+    [SerializeField]
+    private ChatGPTResponse lastChatGPTResponseCache;
+
+
+    public string ChatGPTMessage
     {
-        domain = ScriptDomain.CreateDomain(nameof(ChatGPTTester));
-        scenarioTitle.text = string.Empty;
-
-        //cached initial question
-        cachedChatGPTQuestion = chatGPTQuestion;
-    }
-
-    /// <summary>
-    /// Handles cases when question changes and we need to cache the original
-    /// question asked, this allow us to rerun the same question multiple times
-    /// </summary>
-    private void OnValidate()
-    {
-        if(cachedChatGPTQuestion != chatGPTQuestion)
+        get
         {
-            Debug.Log($"Question is changed to scenario: {chatGPTQuestion.scenarioTitle}");
-            cachedChatGPTQuestion = chatGPTQuestion;
+            return (lastChatGPTResponseCache.Choices.FirstOrDefault()?.Message?.Content ?? null) ?? string.Empty;
         }
     }
 
-    /// <summary>
-    /// Execute is called from the AskButton labeled "ASK CHATGPT"
-    /// </summary>
+    public Color CompileButtonColor
+    {
+        set
+        {
+            compilerButton.GetComponent<Image>().color = value;
+        }
+    }
+
+    private void Awake()
+    {
+        askButton.onClick.AddListener(() =>
+        {
+            compilerButton.interactable = false;
+            CompileButtonColor = Color.white;
+
+            Execute();
+        });
+    }
+
     public void Execute()
     {
-        gptPrompt = chatGPTQuestion.prompt;
+        gptPrompt = $"{chatGPTQuestion.promptPrefixConstant} {chatGPTQuestion.prompt}";
 
-        // populate scenario question
-        scenarioTitle.text = $"Scenario Question: {chatGPTQuestion.scenarioTitle}";
+        scenarioTitleText.text = chatGPTQuestion.scenarioTitle;
 
-        askButton.interactable = importModelButton.interactable = false;
+        askButton.interactable = false;
 
-        ChatGPTProgress.Instance.StartProgress($"Generating code (attempt #{attemptsCount+1}) please wait");
+        ChatGPTProgress.Instance.StartProgress("Generating source code please wait");
 
         // handle replacements
         Array.ForEach(chatGPTQuestion.replacements, r =>
@@ -76,78 +79,35 @@ public class ChatGPTTester : MonoBehaviour
             gptPrompt = gptPrompt.Replace("{" + $"{r.replacementType}" + "}", r.value);
         });
 
-        scenarioQuestion.text = gptPrompt;
-
-        // call chatGPT service
-        StartCoroutine(ChatGPTClient.Instance.Ask(gptPrompt, (r) => ProcessResponse(r)));
-    }
-
-    public void ImportModel(string modelName)
-    {
-        ChatGPTProgress.Instance.StartProgress($"Importing model {modelName} please wait");
-        StartCoroutine(SketchfabClient.Instance.SearchForModels(modelName, (r) => ProcessResponseModel(r)));
-    }
-
-    private void ProcessResponseModel(SketchfabSearchResponse response)
-    {
-        var modelCount = response.Results.Count();
-        if (modelCount == 0 || response.Results == null) return;
-
-        var pickAModelAtIndex = UnityEngine.Random.Range(0, modelCount);
-        var model = response.Results.Skip(pickAModelAtIndex - 1).Take(1).FirstOrDefault();
-
-        if (model != null)
+        // handle reminders
+        if (chatGPTQuestion.reminders.Length > 0)
         {
-            StartCoroutine(SketchfabClient.Instance.DownloadModel(model.ModelId, (r) => ProcessDownloadModel(r)));
+            gptPrompt += $", {string.Join(',', chatGPTQuestion.reminders)}";
         }
+
+        scenarioQuestionText.text = gptPrompt;
+
+
+        StartCoroutine(ChatGPTClient.Instance.Ask(gptPrompt, (response) =>
+        {
+            askButton.interactable = true;
+
+            CompileButtonColor = Color.green;
+
+            compilerButton.interactable = true;
+            lastChatGPTResponseCache = response;
+
+            ChatGPTProgress.Instance.StopProgress();
+
+            Logger.Instance.LogInfo(ChatGPTMessage);
+
+            if (immediateCompilation)
+                ProcessAndCompileResponse();
+        }));
     }
 
-    private void ProcessDownloadModel(SketchfabDownloadResponse response)
+    public void ProcessAndCompileResponse()
     {
-        StartCoroutine(SketchfabClient.Instance.DownloadZipFile(response.Gltf.Url,
-            (r) => (new GltfImport()).ExtractAndImportGLTF(r, chatGPTQuestion.SearchEntityValue)));
-    }
-
-    private void ProcessResponse(ChatGPTResponse response)
-    {   
-        askButton.interactable = importModelButton.interactable = true;
-        ChatGPTProgress.Instance.StopProgress();
-        Logger.Instance.LogInfo(response.Data);
-
-        try
-        {
-            // Compile and load the source code
-            ScriptAssembly assembly = domain.CompileAndLoadSource(response.Data, ScriptSecurityMode.UseSettings);
-
-            ScriptType behaviourType = assembly.FindSubTypeOf<MonoBehaviour>(chatGPTQuestion.replacements
-                .FirstOrDefault(r => r.replacementType == Replacements.CLASS_NAME).value);
-
-            ScriptProxy proxy = behaviourType.CreateInstance(gameObject);
-
-            // add an optional check here
-            proxy.Call(chatGPTQuestion.replacements
-                .FirstOrDefault(r => r.replacementType == Replacements.ACTION_APPLY).value);
-        }
-        catch (Exception e)
-        {
-            Logger.Instance.LogWarning($"Review the generated code, more likely ChatGPT\ndidn't produce the prompt exactly as indicated.\n{e.Message}");
-            // if we get an error let's try to tell ChatGPT what happened and see
-            // if is smart enough to figure it out.
-            if (attemptsCount < attemptsAllowed)
-            {
-                attemptsCount++;
-                //TODO implement a good way of avoiding future errors
-                //chatGPTQuestion.prompt += $", avoid this error: {e.Message}";
-                Execute();
-            }
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (domain != null)
-        {
-            domain.Dispose();
-        }
+        RoslynCodeRunner.Instance.RunCode(ChatGPTMessage);
     }
 }

@@ -9,14 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82c716ced2625d44aa8a31fb92890483, type: 3}
+  m_Script: {fileID: 11500000, guid: 2996543ff717ed34d8b930dad6d31785, type: 3}
   m_Name: ChatGPTSettings
   m_EditorClassIdentifier: 
-  apiURL: http://localhost:5000/chatgpt/question
+  apiURL: https://api.openai.com/v1/chat/completions
   apiKey: 
+  apiOrganization: 
+  apiModel: gpt-3.5-turbo
   debug: 1
-  reminders:
-  - do not include any explanations
-  - always use ``` for markdown code
-  - include Unity and System Collections namespaces
-  - be sure to use IEnumerator in any metholds including yield
+  reminders: []
