@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8f40005f71da0842b543834cc80d108, type: 3}
-  m_Name: ChatGPTQuestion_2
+  m_Name: ChatGPTQuestion_3
   m_EditorClassIdentifier: 
-  scenarioTitle: Finding a player armature, moving, and jump
+  scenarioTitle: Creating player armatures, moving, and jumping
   promptPrefixConstant: A unity c# class script that
-  prompt: finds a PlayerArmature game object and get StarterAssetsInputs component
-    and sets the "move" field to a vector2 with 0.3f for x and 0 for y, set "move"
-    field to 0 after 3 seconds, then set "jump" field to true for 3 seconds
+  prompt: loads a PlayerArmature from Resources consistently every 1/2 second, get
+    StarterAssetsInputs component, set the "move" field to a vector2 with 1.0f for
+    x and 0 for y, then set the "jump" field to true
   replacements: []
   reminders:
   - do not include any explanations
