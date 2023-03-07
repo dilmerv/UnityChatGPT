@@ -1,5 +1,5 @@
-# Unity ChatGPT
-Few examples with ChatGPT API In Unity and this is highly experimental.
+# Unity ChatGPT Experiments
+Few examples with ChatGPT API and ChatGPT Python Wrapper In Unity and highly experimental.
 
 ## Unity Requirements:
 1. Unity 2021.3.8f or greater
