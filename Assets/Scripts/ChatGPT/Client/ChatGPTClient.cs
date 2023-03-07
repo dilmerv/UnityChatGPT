@@ -10,7 +10,7 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
     [SerializeField]
     private ChatGTPSettings chatGTPSettings;
 
-    public IEnumerator Ask(string prompt, System.Action<ChatGPTResponse> callBack)
+    public IEnumerator Ask(string prompt, Action<ChatGPTResponse> callBack)
     {
         var url = chatGTPSettings.debug ? $"{chatGTPSettings.apiURL}?debug=true" : chatGTPSettings.apiURL;
 

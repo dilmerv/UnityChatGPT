@@ -1,11 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-
-public class ChatGPTRequest
+﻿public class ChatGPTRequest
 {
-    [JsonProperty(PropertyName = "model")]
     public string Model { get; set; }
 
-    [JsonProperty(PropertyName = "messages")]
     public ChatGPTMessage[] Messages { get; set; }
 }
