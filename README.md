@@ -4,6 +4,14 @@ Few examples with ChatGPT API In Unity and this is highly experimental.
 ## Unity Requirements:
 1. Unity 2021.3.8f or greater
 2. [Roslyn C# - Runtime DLLs](https://github.com/dilmerv/UnityRoslynDemos) which you can get from the Resources folder. I'm also planning to add the Class Library project to GitHub which should allow you to generate these DLLs yourself.
+3. Open any of the available scenes
+4. Update ChatGPTSettings file located under Assets/Settings/ChatGPT/
+   
+<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/NewChatGPTSettings.png" width="300">
+
+5- Each scene has a ChatGPTTester game object & script in the hierarchy, feel free to associate a new ChatGPTQuestion scriptable object as a reference as shown below:
+
+<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/NewChatGPTQuestion.png" width="300">
 
 ## ChatGPT Flask Service 
 

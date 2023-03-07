@@ -93,7 +93,6 @@ public class ChatGPTTester : MonoBehaviour
 
         scenarioQuestionText.text = gptPrompt;
 
-
         StartCoroutine(ChatGPTClient.Instance.Ask(gptPrompt, (response) =>
         {
             askButton.interactable = true;
