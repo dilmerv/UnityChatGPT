@@ -16,19 +16,20 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
 
         using(UnityWebRequest request = new UnityWebRequest(url, "POST"))
         {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(
-                JsonConvert.SerializeObject(new ChatGPTRequest
-                {
-                   Model = chatGTPSettings.apiModel,
-                   Messages = new ChatGPTMessage[]
+            var requestParams = JsonConvert.SerializeObject(new ChatGPTRequest
+            {
+                Model = chatGTPSettings.apiModel,
+                Messages = new ChatGPTMessage[]
                    {
                        new ChatGPTMessage
                        {
                             role = "user",
                             content = prompt
-                       }                       
+                       }
                    }
-                }));
+            });
+
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(requestParams);
             
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
             request.downloadHandler = new DownloadHandlerBuffer();
