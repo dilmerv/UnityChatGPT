@@ -6,7 +6,7 @@ Few examples with ChatGPT API and ChatGPT Python Wrapper In Unity and highly exp
 |Scenes||
 |---|---|
 |ChatGPTLogger.unity: a simple scene showing you how to ask ChatGPT to generate code which creates primitive cubes|ChatGPTPlayerClones: loads a player armature from resources, clones players every 1/2 a second, gets the starter assets input component, and makes players move and jump|
-|<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTDemo_1.png" width="300">|<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTDemo_2.png" width="300">|
+|<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTDemo_1.gif" width="300">|<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTDemo_2.gif" width="300">|
 
 ## Unity Requirements:
 1. Unity 2021.3.8f or greater
