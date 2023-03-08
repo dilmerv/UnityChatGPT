@@ -1,6 +1,13 @@
 # Unity ChatGPT
 Few examples with ChatGPT API In Unity and this is highly experimental.
 
+## ChatGPT Demo Scenes
+
+|Scenes||
+|---|---|
+|ChatGPTLogger.unity: a simple scene showing you how to ask ChatGPT to generate code which creates primitive cubes|ChatGPTPlayerClones: loads a player armature from resources, clones players every 1/2 a second, gets the starter assets input component, and makes players move and jump|
+|<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTDemo_1.png" width="300">|<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTDemo_2.png" width="300">|
+
 ## Unity Requirements:
 1. Unity 2021.3.8f or greater
 2. [Roslyn C# - Runtime DLLs](https://github.com/dilmerv/UnityRoslynDemos) which you can get from the Resources folder. I'm also planning to add the Class Library project to GitHub which should allow you to generate these DLLs yourself.
@@ -9,7 +16,7 @@ Few examples with ChatGPT API In Unity and this is highly experimental.
    
 <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/NewChatGPTSettings.png" width="300">
 
-5- Each scene has a ChatGPTTester game object & script in the hierarchy, feel free to associate a new ChatGPTQuestion scriptable object as a reference as shown below:
+5. Each scene has a ChatGPTTester game object & script in the hierarchy, feel free to associate a new ChatGPTQuestion scriptable object as a reference as shown below:
 
 <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/NewChatGPTQuestion.png" width="300">
 
