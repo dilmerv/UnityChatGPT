@@ -5,18 +5,25 @@ Few examples with ChatGPT API and ChatGPT Python Wrapper In Unity and highly exp
 
 |Scenes||
 |---|---|
-|ChatGPTLogger.unity: a simple scene showing you how to ask ChatGPT to generate code which creates primitive cubes|ChatGPTPlayerClones: loads a player armature from resources, clones players every 1/2 a second, gets the starter assets input component, and makes players move and jump|
+|**ChatGPTLogger.unity**: a simple scene showing you how to ask ChatGPT to generate code which creates primitive cubes|**ChatGPTPlayerClones**: loads a player armature from resources, clones players every 1/2 a second, gets the starter assets input component, and makes players move and jump|
 |<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTDemo_1.gif" width="300">|<img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/ChatGPTDemo_2.gif" width="300">|
+
+## ChatGPT Example Prompts
+1. A unity c# class script that creates 100 cubes by Using PrimitiveType cubes and then forms a three dimensional pyramid
+2. A unity c# class script that finds a PlayerArmature game object and get StarterAssetsInputs component and sets the "move" field to a vector2 with 0.3f for x and 0 for y, set "move" field to 0 after 3 seconds, then set "jump" field to true for 3 seconds
+3. A unity c# class script that loads a PlayerArmature from Resources consistently every 1/2 second, get StarterAssetsInputs component, set the "move" field to a vector2 with 1.0f for x and 0 for y, then set the "jump" field to true
 
 ## Unity Requirements:
 1. Unity 2021.3.8f or greater
 2. [Roslyn C# - Runtime DLLs](https://github.com/dilmerv/UnityRoslynDemos) which you can get from the Resources folder. I'm also planning to add the Class Library project to GitHub which should allow you to generate these DLLs yourself.
 3. Open any of the available scenes
-4. Update ChatGPTSettings file located under Assets/Settings/ChatGPT/
+4. Create an account in [OpenAI](https://platform.openai.com/signup)
+5. Get a new [API Key](https://platform.openai.com/account/api-keys) and your [API Organization](https://platform.openai.com/account/org-settings)
+6. Update ChatGPTSettings file located under Assets/Settings/ChatGPT/
    
    <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/NewChatGPTSettings.png" width="300">
 
-5. Each scene has a ChatGPTTester game object & script in the hierarchy, feel free to associate a new ChatGPTQuestion scriptable object as a reference as shown below:
+7. Each scene has a ChatGPTTester game object & script in the hierarchy, feel free to associate a new ChatGPTQuestion scriptable object as a reference as shown below:
 
    <img src="https://github.com/dilmerv/UnityChatGPT/blob/master/docs/images/NewChatGPTQuestion.png" width="300">
 
