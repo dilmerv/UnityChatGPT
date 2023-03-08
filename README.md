@@ -1,5 +1,7 @@
 # Unity ChatGPT Experiments
-Few examples based on [my 🤖 ChatGPT with Unity video series on YouTube](https://www.youtube.com/watch?v=6pWoVRYNWws&list=PLQMQNmwN3Fvxec05vELA3D05-Y93LzFt_&index=5) which is now supporting ChatGPT API and ChatGPT Python Wrapper BUT highly experimental.
+Few examples based on [my 🤖 ChatGPT with Unity video series on YouTube](https://www.youtube.com/watch?v=6pWoVRYNWws&list=PLQMQNmwN3Fvxec05vELA3D05-Y93LzFt_&index=5) which is now supporting ChatGPT API and ChatGPT Python Wrapper BUT highly experimental. 
+
+🔔 *Suppot all my work by [Subscribing to YouTube](https://www.youtube.com/@dilmerv?sub_confirmation=1)*
 
 ## ChatGPT Demo Scenes
 
