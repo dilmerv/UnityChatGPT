@@ -38,7 +38,6 @@ public class ChatGPTTester : MonoBehaviour
     [SerializeField]
     private ChatGPTResponse lastChatGPTResponseCache;
 
-
     public string ChatGPTMessage
     {
         get

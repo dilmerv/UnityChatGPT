@@ -6,5 +6,5 @@ public class ChatGPTRequest
     public string Model { get; set; }
 
     [JsonProperty(PropertyName = "messages")]
-    public ChatGPTMessage[] Messages { get; set; }
+    public ChatGPTChatMessage[] Messages { get; set; }
 }

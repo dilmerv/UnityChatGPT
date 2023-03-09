@@ -19,12 +19,12 @@ public class ChatGPTClient : Singleton<ChatGPTClient>
             var requestParams = JsonConvert.SerializeObject(new ChatGPTRequest
             {
                 Model = chatGTPSettings.apiModel,
-                Messages = new ChatGPTMessage[]
+                Messages = new ChatGPTChatMessage[]
                    {
-                       new ChatGPTMessage
+                       new ChatGPTChatMessage
                        {
-                            role = "user",
-                            content = prompt
+                            Role = "user",
+                            Content = prompt
                        }
                    }
             });

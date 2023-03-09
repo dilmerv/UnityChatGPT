@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ChatGPTWithPlayer.unity
     guid: 22f58cafb5dec97448664dee64956a60
+  - enabled: 1
+    path: Assets/Scenes/ChatGPTWithPlayerClones.unity
+    guid: 52a5eddf20c9a7747bb03e207911ae39
   m_configObjects: {}

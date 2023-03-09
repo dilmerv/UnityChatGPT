@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scenarioTitle: Creating primite type cubes and rotate them
   promptPrefixConstant: A unity c# class script that
-  prompt: 20 primitiveType cubes and consistently rotate them along the y axis at
-    very fast speed
+  prompt: creates 20 primitiveType cubes and consistently rotate them along the y
+    axis at very fast speed
   replacements: []
   reminders:
   - do not include any explanations

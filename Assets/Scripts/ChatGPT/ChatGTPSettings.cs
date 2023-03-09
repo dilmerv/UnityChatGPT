@@ -12,6 +12,4 @@ public class ChatGTPSettings : ScriptableObject
     public string apiModel;
 
     public bool debug;
-
-    public string[] reminders;
 }
